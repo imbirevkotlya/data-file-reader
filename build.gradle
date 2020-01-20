@@ -1,0 +1,8 @@
+plugins {
+    id 'java'
+}
+
+group 'com.epam.lemon'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.11
