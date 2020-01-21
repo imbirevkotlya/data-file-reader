@@ -23,10 +23,10 @@ public class QSAMDataset implements Dataset {
     }
 
     private void fillRecordsList(byte[] dataFile, Integer recordLength) {
-        byte[] buffer = new byte[recordLength];
         ByteArrayInputStream dataFileInputStream = new ByteArrayInputStream(dataFile);
         Integer recordsAmount = determineRecordsAmount(recordLength, dataFileInputStream);
         for (int i = 0; i < recordsAmount; i++) {
+            byte[] buffer = new byte[recordLength];
             int startPosition = 0;
             dataFileInputStream.readNBytes(buffer, startPosition, recordLength);
             records.add(new Record(buffer));
