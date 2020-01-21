@@ -42,7 +42,7 @@ Prerequisites:
 
 ### Versioning
 
-- Now, the 1.0-SNAPSHOT version is released with simple displaying of records amount and raw data
+- Now, the 1.0-SNAPSHOT version is released with simple displaying of records amount and raw records data
 - In development stage: 1.1-SNAPSHOT version with more specific fields displaying and working by COBOL copybook (
 https://git.epam.com/epm-lstr/lemon/copybook-parser)
 - In plans: 1.2-SNAPSHOT version with supporting new copybook fields (according to the
@@ -54,8 +54,7 @@ updates in Copybook parser library)
 Dataset limitations:
 
 - Only QSAM datasets are supported with sequential records disposition
-- If some fields are incomplete with real data (according to the copybook) you need
-to fill them with zeroes or spaces to fill the field lengths
+- If some records are incomplete with real data, you need to fill them with zeroes or spaces to specified the record lengths
 - For now, only alphanumeric and numeric fields are supported, groups are not available
 - Try to choose encoding correctly, now, the displaying encoding will be your system default
 
