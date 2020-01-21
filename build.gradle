@@ -1,8 +1,27 @@
 plugins {
     id 'java'
+    id 'application'
 }
+
+jar {
+    manifest {
+        attributes(
+                'Main-Class': 'com.epam.lemon.Main'
+        )
+    }
+}
+
+mainClassName = 'com.epam.lemon.Main'
 
 group 'com.epam.lemon'
 version '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation('junit:junit:4.12')
+}
