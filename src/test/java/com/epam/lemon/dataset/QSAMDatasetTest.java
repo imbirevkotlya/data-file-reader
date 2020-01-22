@@ -32,7 +32,7 @@ public class QSAMDatasetTest {
     public void iterateForRecords_defaultEncoding() throws IOException {
         QSAMDataset qsamDataset = createQSAMDatasetWithDefaultEncoding(DEFAULT_ENCODING_TEST_FILE_PATH);
 
-        new DefaultEncodingRecordValueVerifier().verifyRecordValues(qsamDataset);
+        new DefaultEncodingDatasetVerifier().verifyDatasetRecords(qsamDataset);
         verifyNoMoreRecords(qsamDataset);
     }
 
@@ -48,7 +48,7 @@ public class QSAMDatasetTest {
     public void iterateForRecords_asciiEncoding() throws IOException {
         QSAMDataset asciiDataset = createQSAMDatasetWithEncoding(ASCII_TEST_FILE_PATH, StandardCharsets.US_ASCII);
 
-        new AsciiEncodingRecordValueVerifier().verifyRecordValues(asciiDataset);
+        new AsciiDatasetVerifier().verifyDatasetRecords(asciiDataset);
         verifyNoMoreRecords(asciiDataset);
     }
 
@@ -60,7 +60,7 @@ public class QSAMDatasetTest {
     public void iterateForRecords_ebcdicEncoding() throws IOException {
         QSAMDataset ebcdicDataset = createQSAMDatasetWithEncoding(EBCDIC_TEST_FILE_PATH, EBCDIC_CHARSET);
 
-        new EbcdicEncodingRecordValueVerifier().verifyRecordValues(ebcdicDataset);
+        new EbcdicDatasetVerifier().verifyDatasetRecords(ebcdicDataset);
         verifyNoMoreRecords(ebcdicDataset);
     }
 
@@ -68,7 +68,7 @@ public class QSAMDatasetTest {
     public void iterateForRecordsAmount_illegalNextCall() throws IOException {
         QSAMDataset qsamDataset = createQSAMDatasetWithDefaultEncoding(DEFAULT_ENCODING_TEST_FILE_PATH);
 
-        new DefaultEncodingRecordValueVerifier().verifyRecordValues(qsamDataset);
+        new DefaultEncodingDatasetVerifier().verifyDatasetRecords(qsamDataset);
         tryGetNextRecord(qsamDataset);
     }
 
@@ -81,9 +81,9 @@ public class QSAMDatasetTest {
         createQSAMDatasetWithDefaultEncoding(WRONG_RECORDS_TEST_FILE_PATH);
     }
 
-    private abstract static class AbstractRecordValueVerifier {
+    private abstract static class DatasetVerifier {
 
-        void verifyRecordValues(QSAMDataset qsamDataset) {
+        void verifyDatasetRecords(QSAMDataset qsamDataset) {
             List<String> expectedRecordValues = expectedRecordValues();
             Assert.assertEquals(expectedRecordValues.size(), qsamDataset.getRecordsAmount().intValue());
             for (String expectedRecordValue : expectedRecordValues) {
@@ -99,15 +99,15 @@ public class QSAMDatasetTest {
         abstract List<String> expectedRecordValues();
     }
 
-    private static class AsciiEncodingRecordValueVerifier extends AbstractRecordValueVerifier {
+    private static class AsciiDatasetVerifier extends DatasetVerifier {
 
         @Override
         List<String> expectedRecordValues() {
-            return new DefaultEncodingRecordValueVerifier().expectedRecordValues();
+            return new DefaultEncodingDatasetVerifier().expectedRecordValues();
         }
     }
 
-    private static class EbcdicEncodingRecordValueVerifier extends AbstractRecordValueVerifier {
+    private static class EbcdicDatasetVerifier extends DatasetVerifier {
 
         @Override
         List<String> expectedRecordValues() {
@@ -118,7 +118,7 @@ public class QSAMDatasetTest {
         }
     }
 
-    private static class DefaultEncodingRecordValueVerifier extends AbstractRecordValueVerifier {
+    private static class DefaultEncodingDatasetVerifier extends DatasetVerifier {
 
         @Override
         List<String> expectedRecordValues() {
@@ -128,7 +128,4 @@ public class QSAMDatasetTest {
             return expectedRecordValues;
         }
     }
-
-
-
 }
