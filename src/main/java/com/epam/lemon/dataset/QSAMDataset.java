@@ -4,6 +4,8 @@ import com.epam.lemon.exception.RecordLengthException;
 import com.epam.lemon.record.Record;
 
 import java.io.ByteArrayInputStream;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -14,12 +16,30 @@ import java.util.NoSuchElementException;
 public class QSAMDataset implements Dataset {
 
     private final List<Record> records;
+    private final Charset datasetEncoding;
+    
     private int recordCursor;
 
-    public QSAMDataset(byte[] dataFile, Integer recordLength) {
+    /**
+     * Constructor to create QSAM mainframe sequential dataset with specified encoding.
+     * @param dataFile is a raw dataset
+     * @param recordLength is a dataset record length
+     * @param datasetEncoding is a dataset encoding
+     */
+    public QSAMDataset(byte[] dataFile, Integer recordLength, Charset datasetEncoding) {
         records = new ArrayList<>();
         recordCursor = 0;
+        this.datasetEncoding = datasetEncoding;
         fillRecordsList(dataFile, recordLength);
+    }
+
+    /**
+     * Constructor to create QSAM mainframe sequential dataset with default encoding (ASCII).
+     * @param dataFile is a raw dataset
+     * @param recordLength is a length of the dataset record
+     */
+    public QSAMDataset(byte[] dataFile, Integer recordLength) {
+        this(dataFile, recordLength, StandardCharsets.US_ASCII);
     }
 
     private void fillRecordsList(byte[] dataFile, Integer recordLength) {
@@ -29,7 +49,7 @@ public class QSAMDataset implements Dataset {
             byte[] buffer = new byte[recordLength];
             int startPosition = 0;
             dataFileInputStream.readNBytes(buffer, startPosition, recordLength);
-            records.add(new Record(buffer));
+            records.add(new Record(buffer, datasetEncoding));
         }
     }
 
