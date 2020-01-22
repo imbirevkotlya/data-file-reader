@@ -1,4 +1,4 @@
-# COBOL file converter
+# Mainframe Dataset Reader
 
 The project is about mainframe record datasets reading and (for now) displaying the data
 
